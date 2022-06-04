@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:deathList="clr-namespace:DeathList"
+             x:Class="DeathList.MainPage"
+             x:DataType="deathList:MainViewModel"
+             BackgroundImageSource="sansBIGdark.jpg">
+
+    <StackLayout>
+        <Label Text="DEATH LIST" 
+               FontAttributes="Bold" 
+               HorizontalTextAlignment="Center" 
+               TextColor="White" 
+               FontSize="48"/>
+
+        <CollectionView ItemsSource="{Binding TasksList}">
+            <CollectionView.ItemTemplate >
+                <DataTemplate x:DataType="{x:Type deathList:DeathNode}">
+                    <StackLayout Orientation="Horizontal" 
+                                 BackgroundColor="#1a2843">
+                        <CheckBox IsChecked="{Binding IsDead}"/>
+                        <Entry Text="{Binding Text}" 
+                               TextColor="White"
+                               WidthRequest="250"/>
+                        <Button Text="Kill" 
+                                BackgroundColor="#D4172F" 
+                                HorizontalOptions="EndAndExpand"
+                                Command="{Binding RemoveTask, Source={RelativeSource AncestorType={x:Type deathList:MainViewModel}}}"
+                                CommandParameter="{Binding}"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
+        <Entry BackgroundColor="#1a2843"
+               Placeholder="Введите текст"
+               PlaceholderColor="Gray"
+               ClearButtonVisibility="WhileEditing"
+               TextColor="White"
+               ReturnCommand="{Binding AddTask}"
+               ReturnCommandParameter="{Binding Text, Source={RelativeSource Self}}"/>
+    </StackLayout>
+
+</ContentPage>
